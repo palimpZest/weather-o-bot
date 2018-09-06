@@ -19,4 +19,15 @@ function foo(x: ?number): string {
   return 'default string';
 }
 
-foo();
+foo(1);
+
+/**
+ * Returns the square of a number
+ * @param {int} n The number.
+ * @returns {int} The result.
+ */
+function square(n) {
+  return n * n; // Error!
+}
+
+square(2);
