@@ -1,11 +1,14 @@
 {
   "name": "weatherobot",
   "version": "1.0.0",
+  "private": true,
   "description": "",
   "main": "lib/index.js",
   "scripts": {
-    "build": "babel src/ -d lib/",
-    "prepublish": "npm run build",
+    "start": "node ./bin/www",
+    "dev": "nodemon ./bin/www",
+    "build": "babel src/ -d build/",
+    "prepublishOnly": "npm run build",
     "flow": "flow",
     "lint": "eslint ./src --ext .js,.jsx",
     "test": "mocha",
@@ -21,6 +24,15 @@
     "url": "https://github.com/palimpZest/weather-o-bot/issues"
   },
   "homepage": "https://github.com/palimpZest/weather-o-bot#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "serve-favicon": "~2.4.5",
+    "jade": "~1.11.0",
+    "body-parser": "~1.18.2",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "morgan": "~1.9.0"
+  },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-eslint": "^9.0.0",
@@ -32,6 +44,7 @@
     "eslint-plugin-react": "^7.11.1",
     "flow-bin": "^0.80.0",
     "mocha": "^5.2.0",
+    "nodemon": "^1.18.4",
     "nyc": "^13.0.1"
   }
 }
