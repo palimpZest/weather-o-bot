@@ -1,7 +1,7 @@
 const express = require('express');
 const http = require('http');
 const functions = require('firebase-functions');
-const keys = require('./../config/keys');
+// const keys = require('./../config/keys');
 
 const router = express.Router();
 
@@ -12,7 +12,9 @@ router.get('/', (req, res) => {
 
 router.get('/action', (req, res) => {
   const host = 'api.worldweatheronline.com';
-  const wwoApiKey = keys.weatherAPIKey;
+  /* eslint-disable */
+  const wwoApiKey = WWO_API_KEY;
+  /* eslint-enable */
   /**
    * Takes city and date args and returns output
    * @param {string} city Name of city.
