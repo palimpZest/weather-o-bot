@@ -1,10 +1,10 @@
 # Project files
 
 # config
-config/
+/config
 
 # build
-build/
+/build
 
 # Express default gitignore
 
