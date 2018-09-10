@@ -1,6 +1,7 @@
 const express = require('express');
 const http = require('http');
 const functions = require('firebase-functions');
+// const timeout = require('connect-timeout');
 // const keys = require('./../config/keys');
 
 const router = express.Router();
@@ -90,4 +91,5 @@ router.get('/action', (req, res) => {
   console.log(res.body);
   res.send('weatheRobot action');
 });
+
 module.exports = router;
