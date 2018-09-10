@@ -14,9 +14,8 @@ router.get('/action', (req, res) => {
 
 router.post('/action', (req, res) => {
   const host = 'api.worldweatheronline.com';
-  /* eslint-disable */
+  // eslint-disable-next-line
   const wwoApiKey = process.env.WWO_API_KEY;
-  /* eslint-enable */
   /**
    * Takes city and date args and returns output
    * @param {string} city Name of city.
