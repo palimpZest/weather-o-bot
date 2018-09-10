@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "description": "",
-  "main": "lib/index.js",
+  "main": "build/index.js",
   "scripts": {
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www",

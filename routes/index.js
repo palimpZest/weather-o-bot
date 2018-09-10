@@ -1,6 +1,6 @@
 const express = require('express');
 const http = require('http');
-const functions = require('firebase-functions');
+// const functions = require('firebase-functions');
 // const timeout = require('connect-timeout');
 // const keys = require('./../config/keys');
 
@@ -9,6 +9,10 @@ const router = express.Router();
 /* GET home page. */
 router.get('/', (req, res) => {
   res.render('index', { title: 'weatherBot' });
+});
+
+router.get('/action', (req, res) => {
+  res.send('weatheRobot action');
 });
 
 router.post('/action', (req, res) => {
@@ -52,7 +56,6 @@ router.post('/action', (req, res) => {
           // Resolve the promise with the output text
           console.log(output);
           resolve(output);
-          res.send(output);
         });
         resp.on('error', (error) => {
           console.log(`Error calling the weather API: ${error}`);
@@ -61,35 +64,26 @@ router.post('/action', (req, res) => {
       });
     });
   }
+  // Get the city and date from the request
+  const city = req.body.queryResult.parameters['geo-city']; // city is a required param
 
-  exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response) => {
-    // Get the city and date from the request
-    const city = request.body.queryResult.parameters['geo-city']; // city is a required param
-
-    // Get the date for the weather forecast (if present)
-    /* eslint-disable */
-    let date = '';
-    if (request.body.queryResult.parameters.date) {
-      let date = request.body.queryResult.parameters.date;
-      console.log(`Date: ${date}`);
-    }
-    /* eslint-enable */
-    // Call the weather API
-    callWeatherApi(city, date)
-      .then((output) => {
-        // Return the results of the weather API to Dialogflow
-        response.json({ fulfillmentText: output });
-      })
-      .catch(() => {
-        response.json({ fulfillmentText: "I don't know the weather but I hope it's good!" });
-      });
-  });
-});
-
-router.get('/action', (req, res) => {
-  console.log('post response');
-  console.log(res.body);
-  res.send('weatheRobot action');
+  // Get the date for the weather forecast (if present)
+  /* eslint-disable */
+  let date = '';
+  if (req.body.queryResult.parameters.date) {
+    let date = req.body.queryResult.parameters.date;
+    console.log(`Date: ${date}`);
+  }
+  /* eslint-enable */
+  // Call the weather API
+  callWeatherApi(city, date)
+    .then((output) => {
+      // Return the results of the weather API to Dialogflow
+      res.send({ fulfillmentText: output });
+    })
+    .catch(() => {
+      res.send({ fulfillmentText: "I don't know the weather but I hope it's good!" });
+    });
 });
 
 module.exports = router;
