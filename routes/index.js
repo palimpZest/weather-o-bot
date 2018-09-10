@@ -1,3 +1,4 @@
+// @flow
 const express = require('express');
 const http = require('http');
 
@@ -16,6 +17,9 @@ router.post('/action', (req, res) => {
   const host = 'api.worldweatheronline.com';
   // eslint-disable-next-line
   const wwoApiKey = process.env.WWO_API_KEY;
+  if (!wwoApiKey) {
+    throw new Error('No API Key found');
+  }
   /**
    * Takes city and date args and returns output
    * @param {string} city Name of city.
