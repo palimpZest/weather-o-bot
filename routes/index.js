@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
   res.render('index', { title: 'weatherBot' });
 });
 
-router.get('/action', (req, res) => {
+router.post('/action', (req, res) => {
   const host = 'api.worldweatheronline.com';
   /* eslint-disable */
   const wwoApiKey = process.env.WWO_API_KEY;
@@ -51,6 +51,7 @@ router.get('/action', (req, res) => {
           // Resolve the promise with the output text
           console.log(output);
           resolve(output);
+          res.send(output);
         });
         resp.on('error', (error) => {
           console.log(`Error calling the weather API: ${error}`);
@@ -82,7 +83,11 @@ router.get('/action', (req, res) => {
         response.json({ fulfillmentText: "I don't know the weather but I hope it's good!" });
       });
   });
-  res.send('weatheRobot action');
 });
 
+router.get('/action', (req, res) => {
+  console.log('post response');
+  console.log(res.body);
+  res.send('weatheRobot action');
+});
 module.exports = router;
