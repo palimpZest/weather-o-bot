@@ -6,11 +6,11 @@ const router = express.Router();
 
 /* GET home page. */
 router.get('/', (req, res) => {
-  res.render('index', { title: 'weatherBot' });
+  res.render('index', { title: 'weatherRobot' });
 });
 
 router.get('/action', (req, res) => {
-  res.send('weatheRobot action');
+  res.send('weatherRobot action');
 });
 
 router.post('/action', (req, res) => {
@@ -31,7 +31,7 @@ router.post('/action', (req, res) => {
       // Create the path for the HTTP request to get the weather
       const path = `${'/premium/v1/weather.ashx?format=json&num_of_days=1'
         + '&q='}${encodeURIComponent(city)}&key=${wwoApiKey}&date=${date}&date_format=iso8601`;
-      console.log(`API Request: ${host}${path}`);
+      // console.log(`API Request: ${host}${path}`);
 
       // Make the HTTP request to get the weather
       http.get({ host, path }, (resp) => {
@@ -42,11 +42,8 @@ router.post('/action', (req, res) => {
         resp.on('end', () => {
           // After all the data has been received parse the JSON for desired data
           const response = JSON.parse(body);
-          console.log('####response');
-          console.log(response);
           const forecast = response.data.weather[0];
           const location = response.data.request[0];
-          // const dateConditions = req.body.queryResult.queryText;
           const conditions = response.data.current_condition[0];
           const currentConditions = conditions.weatherDesc[0].value;
           // Create response
@@ -57,7 +54,7 @@ router.post('/action', (req, res) => {
           ${forecast.date}.`;
 
           // Resolve the promise with the output text
-          console.log(output);
+          // console.log(output);
           resolve(output);
         });
         resp.on('error', (error) => {
@@ -69,11 +66,10 @@ router.post('/action', (req, res) => {
   }
   // Get the city and date from the request
   const city = req.body.queryResult.parameters['geo-city']; // city is a required param
-  console.log(`City: ${city}`);
   const { date } = req.body.queryResult.parameters;
   if (date && date.length > 0) {
     const formattedDate = req.body.queryResult.parameters.date.substring(0, 10);
-    console.log(`Date: ${formattedDate}`);
+    // console.log(`Date: ${formattedDate}`);
     // Call the weather API with formatted date
     callWeatherApi(city, formattedDate)
       .then((output) => {
@@ -89,8 +85,6 @@ router.post('/action', (req, res) => {
     const defaultDate = newDate.toISOString().substring(0, 10);
     callWeatherApi(city, defaultDate)
       .then((output) => {
-        console.log('###defaultdateFromFnCallWeatherApi###');
-        console.log(defaultDate);
         // Return the results of the weather API to Dialogflow
         res.send({ fulfillmentText: output });
       })
