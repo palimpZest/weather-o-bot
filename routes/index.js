@@ -1,8 +1,5 @@
 const express = require('express');
 const http = require('http');
-// const functions = require('firebase-functions');
-// const timeout = require('connect-timeout');
-// const keys = require('./../config/keys');
 
 const router = express.Router();
 
