@@ -58,8 +58,8 @@ router.post('/action', (req, res) => {
           resolve(output);
         });
         resp.on('error', (error) => {
-          console.log(`Error calling the weather API: ${error}`);
-          reject();
+          // console.log(`Error calling the weather API: ${error}`);
+          reject(error);
         });
       });
     });
